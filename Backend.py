@@ -13,7 +13,7 @@ def AskAlternativeAi(prompt):
     
     resp = client.chat.completions.create(
         model="openrouter/free",
-        messages=[{"role": "user", "content": prompt}],
+        messages=prompt,
     )
     print(resp)
-    return resp.choices[-1].message.content  # Added [0] index to avoid object errors
+    return resp.choices[-1].message.content

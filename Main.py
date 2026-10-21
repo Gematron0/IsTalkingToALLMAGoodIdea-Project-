@@ -5,7 +5,7 @@ def Main():
     print("Hello World!")
     History = []
 
-    HowManyLoops = 0
+    HowManyLoops = 1000
     Questions = ["what is 22*22", "what is 11*-696420", "Do you think blue is a cool color", "How fast are trains", "is the world round"]
 
     Prompt = "Can you remember that my favorite color is Green"

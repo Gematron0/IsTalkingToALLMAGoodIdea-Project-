@@ -1,11 +1,12 @@
 import Backend
 import random
+import sys
 
 def Main():
     print("Hello World!")
     History = []
 
-    HowManyLoops = 100
+    HowManyLoops = 1
     Questions = ["what is 22*22", 
                  "what is 11*-696420", 
                  "Do you think blue is a cool color", 
@@ -38,41 +39,57 @@ def Main():
                  "Which Muppet represents me best?",
                  "Do you like trains"]
 
-    Prompt = "Write an Onion article about me"
-    History.append({"role": "user", "content": Prompt})
+    while True == True:
+        History = []
+        ExpectedPrompt = ""
+        TestOutputForTheFinal = ""
+    
+        ExpectedPrompt = random.choice(Questions)
+        History.append({"role": "user", "content": ExpectedPrompt})
 
-    output = Backend.AskAlternativeAi(History)
-    History.append({"role": "assistant", "content": output})
-    print(f"Completed init with verdict: {output}")
+        TestOutputForTheFinal = Backend.AskAlternativeAi(History)
+        History.append({"role": "assistant", "content": TestOutputForTheFinal})
+        print(f"Completed init with verdict: {TestOutputForTheFinal}")
 
 
-    for i in range(HowManyLoops-1):
+        for i in range(HowManyLoops-1):
 
-        # getting a random question and storing it in the History
-        Prompt = random.choice(Questions)
+            # getting a random question and storing it in the History
+            Prompt = random.choice(Questions)
+            History.append({"role": "user", "content": Prompt})
+
+            output = Backend.AskAlternativeAi(History)
+            History.append({"role": "assistant", "content": output})
+
+            print(f"========== ROUND: {i+1}/{HowManyLoops-1} ========== ")
+            print(f"Prompt: {Prompt}")
+            print(f"Output: {output}")
+
+        Prompt = "What is the answer to the first question?"
         History.append({"role": "user", "content": Prompt})
 
         output = Backend.AskAlternativeAi(History)
         History.append({"role": "assistant", "content": output})
 
-        print(f"========== ROUND: {i+1}/{HowManyLoops-1} ========== ")
+        print(f"========== History ========== ")
+        print(f"History: {History}")
+
+
+        print(f"========== ROUND: {HowManyLoops}/{HowManyLoops} ========== ")
         print(f"Prompt: {Prompt}")
         print(f"Output: {output}")
+        print(f"------------------------------------------------------------")
+        print(f"First Prompt: {ExpectedPrompt}")
+        print(f"First Output: {TestOutputForTheFinal}")
+        print(f"Continue?: (Y, n)")
+        inp = input("input: ")
+        if inp == "n":
+            print("Good Bye!")
+            sys.exit()
 
-    Prompt = "What is the answer to the first question?"
-    History.append({"role": "user", "content": Prompt})
+        HowManyLoops += 1
+        print(f"Heading up to: {HowManyLoops}")
 
-    output = Backend.AskAlternativeAi(History)
-    History.append({"role": "assistant", "content": output})
-
-    print(f"========== History ========== ")
-    print(f"History: {History}")
-
-
-    print(f"========== ROUND: {HowManyLoops}/{HowManyLoops} ========== ")
-    print(f"Prompt: {Prompt}")
-    print(f"Output: {output}")
-    print("Good Bye!")
 
 if __name__ == "__main__":
     Main()

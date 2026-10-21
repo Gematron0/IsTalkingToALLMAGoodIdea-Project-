@@ -1,38 +1,48 @@
 import Backend
+import random
 
 def Main():
     print("Hello World!")
-    history = []
+    History = []
 
-    UserPrompt1 = "Can you remember that my favorite color is Green"
-    history.append({"role": "user", "content": UserPrompt1})
+    HowManyLoops = 0
+    Questions = ["what is 22*22", "what is 11*-696420", "Do you think blue is a cool color", "How fast are trains", "is the world round"]
 
-    output = Backend.AskAlternativeAi(history)
-    history.append({"role": "assistant", "content": output})
+    Prompt = "Can you remember that my favorite color is Green"
+    History.append({"role": "user", "content": Prompt})
+
+    output = Backend.AskAlternativeAi(History)
+    History.append({"role": "assistant", "content": output})
+    print(f"Completed init with verdict: {output}")
+
+
+    for i in range(HowManyLoops-1):
+
+        # getting a random question and storing it in the History
+        Prompt = random.choice(Questions)
+        History.append({"role": "user", "content": Prompt})
+
+        output = Backend.AskAlternativeAi(History)
+        History.append({"role": "assistant", "content": output})
+
+        print(f"========== ROUND: {i}/{HowManyLoops-1} ========== ")
+        print(f"Prompt: {Prompt}")
+        print(f"Output: {output}")
+
+    Prompt = "What is my favorite color again?"
+    History.append({"role": "user", "content": Prompt})
+
+    output = Backend.AskAlternativeAi(History)
+    History.append({"role": "assistant", "content": output})
+
+    print(f"========== History ========== ")
+    print(f"History: {History}")
+
+
+    print(f"========== ROUND: {HowManyLoops}/{HowManyLoops} ========== ")
+    print(f"Prompt: {Prompt}")
     print(f"Output: {output}")
-
-    UserPrompt2 = "what is 22*22"
-    history.append({"role": "user", "content": UserPrompt2})
-
-    output = Backend.AskAlternativeAi(history)
-    history.append({"role": "assistant", "content": output})
-    print(f"Output: {output}")
-
-    UserPrompt3 = "How do airplanes work"
-    history.append({"role": "user", "content": UserPrompt3})
-
-    output = Backend.AskAlternativeAi(history)
-    history.append({"role": "assistant", "content": output})
-    print(f"Output: {output}")
-
-    UserPrompt4 = "What is my favorite color again?"
-    history.append({"role": "user", "content": UserPrompt4})
-
-    output = Backend.AskAlternativeAi(history)
-    history.append({"role": "assistant", "content": output})
-    print(f"Output: {output}")
-    print(f"History: {history}")
-    print(f"--------------------------Final Verdict: {output}")
+    print("Good Bye!")
 
 if __name__ == "__main__":
     Main()

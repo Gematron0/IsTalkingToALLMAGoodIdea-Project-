@@ -15,5 +15,4 @@ def AskAlternativeAi(prompt):
         model="openrouter/free",
         messages=prompt,
     )
-    print(resp)
-    return resp.choices[-1].message.content
+    return resp.choices[0].message.content
